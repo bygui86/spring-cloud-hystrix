@@ -88,3 +88,6 @@
 
 ### Issues
 * https://github.com/spring-cloud/spring-cloud-netflix/issues/948
+
+### Spring Boot Admin (remooved froom version 2.x)
+* https://codecentric.github.io/spring-boot-admin/1.5.1/#_ui_modules
