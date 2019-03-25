@@ -74,7 +74,6 @@
 * https://www.baeldung.com/spring-cloud-netflix-hystrix
 * https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-feign.html#spring-cloud-feign-hystrix
 * http://nphumbert.github.io/blog/2017/07/23/setup-a-circuit-breaker-with-hystrix/
-* https://www.baeldung.com/introduction-to-hystrix - `TODO`
 
 ### Hystrix + Caching
 * https://github.com/eugenp/tutorials/tree/master/spring-cloud/spring-cloud-bootstrap/svc-rating

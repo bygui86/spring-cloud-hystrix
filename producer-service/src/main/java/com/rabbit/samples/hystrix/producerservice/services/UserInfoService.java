@@ -44,13 +44,7 @@ public class UserInfoService {
 
 		List<UserInfo> userInfos = getUserInfoRepo().findAll();
 		UserInfoList userInfoList = UserInfoList.builder().users(userInfos).build();
-		if (getCachedAllUserInfo().isEmpty()
-			&& ! userInfoList.isEmpty()){
-
-			log.info("UserInfoList not in Redis, insert it...");
-
-			getCachedUserInfoRepo().insertAll(userInfoList);
-		}
+		setCachedUserInfo(userInfoList);
 		return userInfoList;
 	}
 
@@ -59,6 +53,18 @@ public class UserInfoService {
 		log.info("Retrieving all UserInfo from Redis");
 
 		return getCachedUserInfoRepo().findAll();
+	}
+
+	// TODO try to replace with 'opsForValue.setIfAbsent("key","value");'
+	private void setCachedUserInfo(final UserInfoList userInfoList) throws IOException {
+
+		if (getCachedAllUserInfo().isEmpty()
+				&& ! userInfoList.isEmpty()){
+
+			log.info("UserInfoList not in Redis, insert it...");
+
+			getCachedUserInfoRepo().insertAll(userInfoList);
+		}
 	}
 
 	// PLEASE NOTE: Note that the fallback method should have the same signature of the wrapped method and must reside in the same class.
@@ -71,13 +77,7 @@ public class UserInfoService {
 		log.info("Get UserInfo by id {}", id);
 
 		Optional<UserInfo> userInfo = getUserInfoRepo().findById(id);
-		if (getCachedUserInfo(id).isEmpty()
-			&& userInfo.isPresent()) {
-
-			log.info("UserInfo not in Redis, insert it...");
-
-			getCachedUserInfoRepo().insert(userInfo.get());
-		}
+		setCachedUserInfoList(id, userInfo);
 		return userInfo;
 	}
 
@@ -86,6 +86,18 @@ public class UserInfoService {
 		log.info("Retrieving UserInfo by id {} from Redis", id);
 
 		return getCachedUserInfoRepo().findById(id);
+	}
+
+	// TODO try to replace with 'opsForValue.setIfAbsent("key","value");'
+	private void setCachedUserInfoList(final Long id, final Optional<UserInfo> userInfo) throws IOException {
+
+		if (getCachedUserInfo(id).isEmpty()
+				&& userInfo.isPresent()) {
+
+			log.info("UserInfo not in Redis, insert it...");
+
+			getCachedUserInfoRepo().insert(userInfo.get());
+		}
 	}
 
 }
